@@ -471,7 +471,15 @@ export default function HomePage() {
       {/* ── Hero ── */}
       <section className="relative flex min-h-[115vh] items-end overflow-hidden bg-black">
         {/* Full background — congregation worship image */}
-        <Image src="/use.jpeg" alt="Hosanna Mandir" fill priority className="object-cover object-top" />
+      <Image
+  src="/use.jpeg"
+  alt="Hosanna Mandir"
+  fill
+  priority
+  quality={100}
+  sizes="100vw"
+  className="object-cover object-center"
+/>  <Image src="/use.jpeg" alt="Hosanna Mandir" fill priority className="object-cover object-top" />
 
         {/* Overlay: clear at top (show image), dark at bottom (text readability) */}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/10" />
