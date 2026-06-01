@@ -256,13 +256,11 @@ function TestimonialsSection() {
         {/* Fixed-height card — always 460px, equal on all testimonials */}
         <div className={`transition-opacity duration-300 ${fading ? 'opacity-0' : 'opacity-100'}`}>
           <div
-            className="overflow-hidden rounded-3xl bg-white shadow-[0_28px_80px_rgba(33,25,20,0.14)] border border-orange-100/60"
-            style={{ height: '460px' }}
+          className="overflow-hidden rounded-3xl bg-white shadow-[0_28px_80px_rgba(33,25,20,0.14)] border border-orange-100/60 h-[650px] lg:h-[460px]"
           >
-            <div className="grid h-full" style={{ gridTemplateColumns: '45% 55%' }}>
-
+     <div className="grid h-full grid-cols-1 lg:grid-cols-[45%_55%]">
               {/* ── Image panel — always shown, graceful fallback ── */}
-              <div className="relative h-full w-full overflow-hidden">
+             <div className="relative h-full w-full overflow-hidden">
                 <TestimonialImg
                   key={`${current}-${t.image}`}
                   src={t.image}
@@ -277,7 +275,7 @@ function TestimonialsSection() {
               </div>
 
               {/* ── Quote panel ── */}
-              <div className={`relative flex flex-col justify-center overflow-hidden px-8 py-10 sm:px-10 ${!t.image ? 'items-center text-center' : ''}`}>
+            <div className={`relative flex flex-col overflow-hidden px-6 py-6 lg:px-10 lg:py-10 ${!t.image ? 'items-center text-center' : ''}`}>
                 {/* Decorative large quote mark */}
                 <svg className="absolute top-6 right-8 h-20 w-20 text-[#e11d48]/6 pointer-events-none select-none" fill="currentColor" viewBox="0 0 32 32">
                   <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
@@ -289,7 +287,7 @@ function TestimonialsSection() {
                 </svg>
 
                 {/* Quote text — scrollable if very long */}
-                <div className="flex-1 overflow-y-auto pr-1" style={{ maxHeight: '280px' }}>
+              <div className="flex-1 overflow-y-auto pr-2 max-h-[220px] lg:max-h-[280px]">
                   <p className="font-modern text-base font-semibold leading-8 text-[#5f4a41] sm:text-[17px]">
                     &ldquo;{t.quote}&rdquo;
                   </p>
