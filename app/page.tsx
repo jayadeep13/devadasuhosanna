@@ -484,7 +484,7 @@ export default function HomePage() {
 
 {/* Mobile Image */}
 <Image
-  src="/use1.png"
+  src="/use.jpeg"
   alt="Hosanna Mandir"
   fill
   priority
