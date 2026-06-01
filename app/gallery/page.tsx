@@ -5,12 +5,13 @@ import Image from 'next/image'
 import ScrollReveal from '@/components/ScrollReveal'
 
 const SUBCATEGORIES = [
-  { value: 'all', label: 'All Photos' },
+
   { value: 'children', label: 'Children' },
   { value: 'gospel-meetings', label: 'Gospel Meetings' },
   { value: 'pastors-meeting', label: 'Pastors Meeting' },
   { value: 'church-construction', label: 'Church Construction' },
   { value: 'others', label: 'Others' },
+    { value: 'all', label: 'All Photos' },
 ]
 
 type MediaItem = {
