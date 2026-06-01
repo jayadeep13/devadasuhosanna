@@ -1,0 +1,319 @@
+[
+  {
+    "id": "51db5b01-d233-4ac3-a8f3-6ac835c9a66c",
+    "category": "gallery",
+    "title": "Hanuman Junction Church",
+    "description": "",
+    "src": "/uploads/gallery/51db5b01-d233-4ac3-a8f3-6ac835c9a66c.webp",
+    "fileName": "51db5b01-d233-4ac3-a8f3-6ac835c9a66c.webp",
+    "createdAt": "2026-05-19T08:07:12.412Z"
+  },
+  {
+    "id": "9e74594c-8639-4401-a49d-4f5986129739",
+    "category": "gallery",
+    "subcategory": "others",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/9e74594c-8639-4401-a49d-4f5986129739.webp",
+    "fileName": "9e74594c-8639-4401-a49d-4f5986129739.webp",
+    "createdAt": "2026-05-19T19:59:18.457Z"
+  },
+  {
+    "id": "058e1509-797d-4014-8c2a-e7093caf8dfe",
+    "category": "gallery",
+    "subcategory": "children",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/058e1509-797d-4014-8c2a-e7093caf8dfe.webp",
+    "fileName": "058e1509-797d-4014-8c2a-e7093caf8dfe.webp",
+    "createdAt": "2026-05-30T08:48:07.251Z"
+  },
+  {
+    "id": "e3a85172-4790-4a3c-a84d-38a3d521c2a5",
+    "category": "gallery",
+    "subcategory": "children",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/e3a85172-4790-4a3c-a84d-38a3d521c2a5.webp",
+    "fileName": "e3a85172-4790-4a3c-a84d-38a3d521c2a5.webp",
+    "createdAt": "2026-05-30T08:48:25.830Z"
+  },
+  {
+    "id": "8506e0a7-c4a5-4682-8461-ff2f449b39aa",
+    "category": "gallery",
+    "subcategory": "children",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/8506e0a7-c4a5-4682-8461-ff2f449b39aa.webp",
+    "fileName": "8506e0a7-c4a5-4682-8461-ff2f449b39aa.webp",
+    "createdAt": "2026-05-30T08:48:51.521Z"
+  },
+  {
+    "id": "1f3399ca-b981-4e93-a6ba-a73702f8b76d",
+    "category": "gallery",
+    "subcategory": "children",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/1f3399ca-b981-4e93-a6ba-a73702f8b76d.webp",
+    "fileName": "1f3399ca-b981-4e93-a6ba-a73702f8b76d.webp",
+    "createdAt": "2026-05-30T08:49:19.432Z"
+  },
+  {
+    "id": "5eec632f-22d6-43b9-a6e4-7d2c8af45d6d",
+    "category": "gallery",
+    "subcategory": "gospel-meetings",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/5eec632f-22d6-43b9-a6e4-7d2c8af45d6d.webp",
+    "fileName": "5eec632f-22d6-43b9-a6e4-7d2c8af45d6d.webp",
+    "createdAt": "2026-05-30T08:50:08.449Z"
+  },
+  {
+    "id": "a2d66056-9b46-4a56-a969-6d5985379149",
+    "category": "gallery",
+    "subcategory": "gospel-meetings",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/a2d66056-9b46-4a56-a969-6d5985379149.webp",
+    "fileName": "a2d66056-9b46-4a56-a969-6d5985379149.webp",
+    "createdAt": "2026-05-30T08:50:29.647Z"
+  },
+  {
+    "id": "edd77f1b-4dd6-4575-a03e-34d6b03cd18e",
+    "category": "gallery",
+    "subcategory": "gospel-meetings",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/edd77f1b-4dd6-4575-a03e-34d6b03cd18e.webp",
+    "fileName": "edd77f1b-4dd6-4575-a03e-34d6b03cd18e.webp",
+    "createdAt": "2026-05-30T08:50:57.797Z"
+  },
+  {
+    "id": "c92865f8-a33d-4bce-bbee-dd60d3fa8234",
+    "category": "gallery",
+    "subcategory": "gospel-meetings",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/c92865f8-a33d-4bce-bbee-dd60d3fa8234.webp",
+    "fileName": "c92865f8-a33d-4bce-bbee-dd60d3fa8234.webp",
+    "createdAt": "2026-05-30T08:51:58.703Z"
+  },
+  {
+    "id": "0d1e234c-a82c-40f3-8552-a10fe8004281",
+    "category": "gallery",
+    "subcategory": "gospel-meetings",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/0d1e234c-a82c-40f3-8552-a10fe8004281.webp",
+    "fileName": "0d1e234c-a82c-40f3-8552-a10fe8004281.webp",
+    "createdAt": "2026-05-30T08:52:12.917Z"
+  },
+  {
+    "id": "4b1a67b1-ab92-4a59-a80b-2ae4234ab836",
+    "category": "gallery",
+    "subcategory": "gospel-meetings",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/4b1a67b1-ab92-4a59-a80b-2ae4234ab836.webp",
+    "fileName": "4b1a67b1-ab92-4a59-a80b-2ae4234ab836.webp",
+    "createdAt": "2026-05-30T08:52:25.091Z"
+  },
+  {
+    "id": "70da2e9d-d5ac-44e9-9b04-e07eebd5db62",
+    "category": "gallery",
+    "subcategory": "gospel-meetings",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/70da2e9d-d5ac-44e9-9b04-e07eebd5db62.webp",
+    "fileName": "70da2e9d-d5ac-44e9-9b04-e07eebd5db62.webp",
+    "createdAt": "2026-05-30T08:52:38.807Z"
+  },
+  {
+    "id": "877716ab-9387-405b-8361-686b98128aef",
+    "category": "gallery",
+    "subcategory": "pastors-meeting",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/877716ab-9387-405b-8361-686b98128aef.webp",
+    "fileName": "877716ab-9387-405b-8361-686b98128aef.webp",
+    "createdAt": "2026-05-30T08:52:48.281Z"
+  },
+  {
+    "id": "c8ef0002-a566-4724-81d5-2343459b8a84",
+    "category": "gallery",
+    "subcategory": "pastors-meeting",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/c8ef0002-a566-4724-81d5-2343459b8a84.webp",
+    "fileName": "c8ef0002-a566-4724-81d5-2343459b8a84.webp",
+    "createdAt": "2026-05-30T08:53:00.069Z"
+  },
+  {
+    "id": "2b9ff529-186a-4d5c-ab02-b31da0c00e8b",
+    "category": "gallery",
+    "subcategory": "pastors-meeting",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/2b9ff529-186a-4d5c-ab02-b31da0c00e8b.webp",
+    "fileName": "2b9ff529-186a-4d5c-ab02-b31da0c00e8b.webp",
+    "createdAt": "2026-05-30T08:53:13.453Z"
+  },
+  {
+    "id": "71100429-c5ff-4c5c-9166-3957af7d4983",
+    "category": "gallery",
+    "subcategory": "pastors-meeting",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/71100429-c5ff-4c5c-9166-3957af7d4983.webp",
+    "fileName": "71100429-c5ff-4c5c-9166-3957af7d4983.webp",
+    "createdAt": "2026-05-30T08:53:30.009Z"
+  },
+  {
+    "id": "25716ed7-f2e5-43db-a3c3-b1798fe9f44b",
+    "category": "gallery",
+    "subcategory": "pastors-meeting",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/25716ed7-f2e5-43db-a3c3-b1798fe9f44b.webp",
+    "fileName": "25716ed7-f2e5-43db-a3c3-b1798fe9f44b.webp",
+    "createdAt": "2026-05-30T08:53:56.204Z"
+  },
+  {
+    "id": "c01dcca0-8781-4333-8c2d-3064139fcbd3",
+    "category": "gallery",
+    "subcategory": "church-construction",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/c01dcca0-8781-4333-8c2d-3064139fcbd3.webp",
+    "fileName": "c01dcca0-8781-4333-8c2d-3064139fcbd3.webp",
+    "createdAt": "2026-05-30T08:54:30.064Z"
+  },
+  {
+    "id": "c211f3cb-b025-4378-97e8-06bed8d11120",
+    "category": "gallery",
+    "subcategory": "church-construction",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/c211f3cb-b025-4378-97e8-06bed8d11120.webp",
+    "fileName": "c211f3cb-b025-4378-97e8-06bed8d11120.webp",
+    "createdAt": "2026-05-30T08:54:49.963Z"
+  },
+  {
+    "id": "db60adca-c3af-4efb-a5a3-73729b2784b4",
+    "category": "gallery",
+    "subcategory": "church-construction",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/db60adca-c3af-4efb-a5a3-73729b2784b4.webp",
+    "fileName": "db60adca-c3af-4efb-a5a3-73729b2784b4.webp",
+    "createdAt": "2026-05-30T08:55:06.179Z"
+  },
+  {
+    "id": "a2d22c68-76f1-4fc7-8f83-c65260dfdc23",
+    "category": "gallery",
+    "subcategory": "church-construction",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/a2d22c68-76f1-4fc7-8f83-c65260dfdc23.webp",
+    "fileName": "a2d22c68-76f1-4fc7-8f83-c65260dfdc23.webp",
+    "createdAt": "2026-05-30T08:55:26.347Z"
+  },
+  {
+    "id": "107f7433-6e9c-40fe-be58-74363e692bae",
+    "category": "gallery",
+    "subcategory": "church-construction",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/107f7433-6e9c-40fe-be58-74363e692bae.webp",
+    "fileName": "107f7433-6e9c-40fe-be58-74363e692bae.webp",
+    "createdAt": "2026-05-30T08:55:41.954Z"
+  },
+  {
+    "id": "759846a5-3b7a-4096-ab24-0f6ac6b17800",
+    "category": "gallery",
+    "subcategory": "others",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/759846a5-3b7a-4096-ab24-0f6ac6b17800.webp",
+    "fileName": "759846a5-3b7a-4096-ab24-0f6ac6b17800.webp",
+    "createdAt": "2026-05-30T08:56:10.820Z"
+  },
+  {
+    "id": "c649564b-4f43-472b-a2fe-c446e4680944",
+    "category": "gallery",
+    "subcategory": "others",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/c649564b-4f43-472b-a2fe-c446e4680944.webp",
+    "fileName": "c649564b-4f43-472b-a2fe-c446e4680944.webp",
+    "createdAt": "2026-05-30T08:56:26.603Z"
+  },
+  {
+    "id": "14146e03-954e-4af7-a919-5e3b2efcd634",
+    "category": "gallery",
+    "subcategory": "others",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/14146e03-954e-4af7-a919-5e3b2efcd634.webp",
+    "fileName": "14146e03-954e-4af7-a919-5e3b2efcd634.webp",
+    "createdAt": "2026-05-30T08:57:15.866Z"
+  },
+  {
+    "id": "7f58f1a8-f794-4b31-9d74-70b0c9808d10",
+    "category": "gallery",
+    "subcategory": "others",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/7f58f1a8-f794-4b31-9d74-70b0c9808d10.webp",
+    "fileName": "7f58f1a8-f794-4b31-9d74-70b0c9808d10.webp",
+    "createdAt": "2026-05-30T08:57:47.967Z"
+  },
+  {
+    "id": "818ab490-a766-41dc-ac9d-7861fe971f01",
+    "category": "gallery",
+    "subcategory": "others",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/818ab490-a766-41dc-ac9d-7861fe971f01.webp",
+    "fileName": "818ab490-a766-41dc-ac9d-7861fe971f01.webp",
+    "createdAt": "2026-05-30T08:58:45.460Z"
+  },
+  {
+    "id": "dc10a1cb-aa04-4eb6-999a-b47feea1e288",
+    "category": "gallery",
+    "subcategory": "others",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/dc10a1cb-aa04-4eb6-999a-b47feea1e288.webp",
+    "fileName": "dc10a1cb-aa04-4eb6-999a-b47feea1e288.webp",
+    "createdAt": "2026-05-30T08:59:11.990Z"
+  },
+  {
+    "id": "23e615bc-aab4-4a86-b149-e346eef323d9",
+    "category": "gallery",
+    "subcategory": "others",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/gallery/23e615bc-aab4-4a86-b149-e346eef323d9.webp",
+    "fileName": "23e615bc-aab4-4a86-b149-e346eef323d9.webp",
+    "createdAt": "2026-05-30T09:01:32.858Z"
+  },
+  {
+    "id": "41a3d530-cab2-4f47-bf40-29d2370f219a",
+    "category": "updates",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/updates/41a3d530-cab2-4f47-bf40-29d2370f219a.webp",
+    "fileName": "41a3d530-cab2-4f47-bf40-29d2370f219a.webp",
+    "createdAt": "2026-05-30T17:39:48.279Z"
+  },
+  {
+    "id": "46d05298-2484-4499-84da-80427f100770",
+    "category": "updates",
+    "title": "Hosanna Update",
+    "description": "",
+    "src": "/uploads/updates/46d05298-2484-4499-84da-80427f100770.webp",
+    "fileName": "46d05298-2484-4499-84da-80427f100770.webp",
+    "createdAt": "2026-05-30T17:39:59.309Z"
+  }
+]
