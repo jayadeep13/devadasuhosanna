@@ -11,7 +11,7 @@ const ministries = [
   { slug: 'children-ministries', image: '/chi.webp',          title: 'Children Ministries', desc: 'Nurturing young hearts with the love and truth of Jesus Christ.',             color: 'from-amber-400 to-orange-600' },
   { slug: 'gospel-meetings',     image: '/gospel.jpeg',       title: 'Gospel Meetings',     desc: 'Powerful evangelistic crusades bringing salvation to communities.',          color: 'from-rose-500 to-red-700' },
   { slug: 'tv-ministries',       image: '/churchm.jpeg',      title: 'T.V Ministries',      desc: 'Broadcasting the Gospel to thousands through television outreach.',          color: 'from-violet-500 to-indigo-700' },
-  { slug: 'youth-ministries',    image: '/youthmini.jpeg',    title: 'Youth Ministries',    desc: 'Raising a generation of bold, purpose-driven believers for God.',            color: 'from-lime-500 to-emerald-700' },
+  { slug: 'youth-ministries',    image: '/youthmini.jpeg',    title: 'Youth Ministries',    desc: 'Raising a generation of bold, purpose-driven believers for God.',             color: 'from-lime-500 to-emerald-700' },
   { slug: 'women-ministries',    image: '/woo12.jpg',           title: 'Women Ministries',    desc: 'Empowering women to walk in their God-given calling and grace.',             color: 'from-pink-500 to-fuchsia-700' },
   { slug: 'pastors-meeting',     image: '/pme.jpeg',          title: 'Pastors Meeting',     desc: 'Uniting church leaders in prayer, vision, and kingdom strategy.',           color: 'from-cyan-500 to-teal-700' },
   { slug: 'church-construction', image: '/churchcons12.jpeg',   title: 'Church Construction', desc: "Building sanctuaries to house God's growing family of believers.",         color: 'from-yellow-500 to-red-600' },
@@ -471,29 +471,35 @@ export default function HomePage() {
       {/* ── Hero ── */}
       <section className="relative flex min-h-[115vh] items-end overflow-hidden bg-black">
         {/* Full background — congregation worship image */}
-{/* Desktop Image */}
-<Image
-  src="/use.jpeg"
-  alt="Hosanna Mandir"
-  fill
-  priority
-  quality={100}
-  sizes="100vw"
-  className="hidden md:block object-cover object-center"
-/>
+        {/* Desktop Image */}
+        <Image
+          src="/use.jpeg"
+          alt="Hosanna Mandir"
+          fill
+          priority
+          quality={100}
+          sizes="100vw"
+          className="hidden md:block object-cover object-center"
+        />
 
-{/* Mobile Image */}
-<Image
-  src="/use.jpeg"
-  alt="Hosanna Mandir"
-  fill
-  priority
-  quality={100}
-  sizes="100vw"
-  className="block md:hidden object-cover object-center"
-/>
-        {/* Overlay: clear at top (show image), dark at bottom (text readability) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/10" />
+        {/* Mobile Image */}
+        <Image
+          src="/use.jpeg" // Using the main asset safely now
+          alt="Hosanna Mandir Mobile"
+          fill
+          priority
+          quality={100}
+          sizes="100vw"
+          className="block md:hidden object-cover object-top"
+        />
+
+        {/* ── NEW DARK TINT OVERLAYS START HERE ── */}
+        {/* Mobile-Specific Dark Overlay Tint (Masks blurriness on mobile screens) */}
+        <div className="absolute inset-0 block md:hidden bg-black/50 z-[1] pointer-events-none" />
+
+        {/* Global Text Readability Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20 z-[2]" />
+        {/* ── NEW DARK TINT OVERLAYS END HERE ── */}
 
         {/* Location label — top center */}
         <div className="absolute top-28 inset-x-0 z-10 flex justify-center">
@@ -502,7 +508,6 @@ export default function HomePage() {
             Hanuman Junction &amp; Nuzvid · Andhra Pradesh
           </span>
         </div>
-
         {/* Main content — pinned to bottom */}
         <div className="relative z-10 w-full px-6 pb-16 sm:pb-20 sm:px-12">
           <div className="mx-auto max-w-6xl">
@@ -515,10 +520,10 @@ export default function HomePage() {
 
               {/* Headline */}
               <h1 className="font-display font-black leading-none text-white">
-                <span className="block text-[clamp(4rem,12vw,9rem)] leading-none tracking-tight drop-shadow-2xl">HOSANNA</span>
-                <div className="mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                  <span className="font-telugu text-[clamp(1.5rem,4vw,3rem)] font-bold text-[#facc15]">దైవ సందేశాలు</span>
-                  <span className="text-[clamp(1rem,2.5vw,1.8rem)] font-light tracking-[0.18em] text-white/50 uppercase">Daiva Sandeshalu</span>
+                <span className="block text-5xl xs:text-6xl sm:text-7xl md:text-[8rem] lg:text-[9rem] leading-none tracking-tight drop-shadow-2xl">HOSANNA</span>
+                <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                  <span className="font-telugu text-2xl xs:text-3xl sm:text-4xl md:text-[3rem] font-bold text-[#facc15]">దైవ సందేశాలు</span>
+                  <span className="text-sm xs:text-base sm:text-lg md:text-[1.8rem] font-light tracking-[0.18em] text-white/50 uppercase">Daiva Sandeshalu</span>
                 </div>
               </h1>
 
