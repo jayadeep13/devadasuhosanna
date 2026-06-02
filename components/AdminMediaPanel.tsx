@@ -90,7 +90,10 @@ function PromisePanel() {
       formData.set('file', webpFile)
       formData.set('caption', caption)
       const r = await fetch('/api/todays-promise', { method: 'POST', body: formData })
-      if (!r.ok) throw new Error('Upload failed.')
+      if (!r.ok) {
+        const body = await r.json().catch(() => ({}))
+        throw new Error(body.error || `Upload failed (${r.status}).`)
+      }
       setCaption('')
       setFile(null)
       const input = document.getElementById('promise-image-upload') as HTMLInputElement | null
@@ -312,9 +315,10 @@ export default function AdminMediaPanel() {
       {/* Main tab selector */}
       <div className="mb-8 flex flex-wrap gap-3">
         {([
+                    { value: 'promise', label: "Today's Promise" },
           { value: 'updates', label: 'Updates' },
           { value: 'gallery', label: 'Gallery' },
-          { value: 'promise', label: "Today's Promise" },
+
         ] as { value: MainTab; label: string }[]).map((tab) => (
           <button
             key={tab.value}

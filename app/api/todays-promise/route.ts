@@ -41,48 +41,54 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const formData = await request.formData()
-  const file = formData.get('file')
-  const caption = String(formData.get('caption') || '').trim()
+  try {
+    const formData = await request.formData()
+    const file = formData.get('file')
+    const caption = String(formData.get('caption') || '').trim()
 
-  if (!(file instanceof File)) {
-    return NextResponse.json({ error: 'Image file is required.' }, { status: 400 })
+    if (!(file instanceof File)) {
+      return NextResponse.json({ error: 'Image file is required.' }, { status: 400 })
+    }
+
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+    const id = randomUUID()
+    const fileName = `${id}.webp`
+    const filePath = path.join(UPLOAD_DIR, fileName)
+
+    await mkdir(UPLOAD_DIR, { recursive: true })
+    await writeFile(filePath, buffer)
+
+    const item: PromiseItem = {
+      id,
+      src: `/uploads/promises/${fileName}`,
+      fileName,
+      caption,
+      uploadedAt: new Date().toISOString(),
+    }
+
+    const items = await readPromises()
+    const sorted = [item, ...items].sort(
+      (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
+    )
+
+    // Rolling window: remove oldest beyond MAX_PROMISES
+    const toKeep = sorted.slice(0, MAX_PROMISES)
+    const toRemove = sorted.slice(MAX_PROMISES)
+
+    for (const old of toRemove) {
+      try {
+        await unlink(path.join(UPLOAD_DIR, old.fileName))
+      } catch {}
+    }
+
+    await writePromises(toKeep)
+    return NextResponse.json({ promise: item }, { status: 201 })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[todays-promise POST]', err)
+    return NextResponse.json({ error: message }, { status: 500 })
   }
-
-  const arrayBuffer = await file.arrayBuffer()
-  const buffer = Buffer.from(arrayBuffer)
-  const id = randomUUID()
-  const fileName = `${id}.webp`
-  const filePath = path.join(UPLOAD_DIR, fileName)
-
-  await mkdir(UPLOAD_DIR, { recursive: true })
-  await writeFile(filePath, buffer)
-
-  const item: PromiseItem = {
-    id,
-    src: `/uploads/promises/${fileName}`,
-    fileName,
-    caption,
-    uploadedAt: new Date().toISOString(),
-  }
-
-  const items = await readPromises()
-  const sorted = [item, ...items].sort(
-    (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-  )
-
-  // Rolling window: remove oldest beyond MAX_PROMISES
-  const toKeep = sorted.slice(0, MAX_PROMISES)
-  const toRemove = sorted.slice(MAX_PROMISES)
-
-  for (const old of toRemove) {
-    try {
-      await unlink(path.join(UPLOAD_DIR, old.fileName))
-    } catch {}
-  }
-
-  await writePromises(toKeep)
-  return NextResponse.json({ promise: item }, { status: 201 })
 }
 
 export async function DELETE(request: NextRequest) {

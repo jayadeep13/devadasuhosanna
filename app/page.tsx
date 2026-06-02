@@ -370,16 +370,36 @@ function PopupManager() {
     } catch { window.open(promise.src, '_blank', 'noopener,noreferrer') }
   }
 
-  const shareWhatsApp = () => {
+  const shareWhatsApp = async () => {
     if (!promise) return
+    try {
+      const response = await fetch(promise.src)
+      const blob = await response.blob()
+      const fileName = promise.src.split('/').pop() || 'todays-promise.webp'
+      const file = new File([blob], fileName, { type: blob.type })
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: "Today's Promise",
+          text: promise.caption || "Today's Promise from Hosanna Mandir",
+        })
+        return
+      }
+    } catch {}
     const text = encodeURIComponent((promise.caption || "Today's Promise from Hosanna Mandir") + '\n' + window.location.origin + '/todays-promise')
     window.open(`https://wa.me/?text=${text}`, '_blank', 'noopener,noreferrer')
   }
 
-  const shareFacebook = () => {
+  const shareFacebook = async () => {
     if (!promise) return
-    const url = encodeURIComponent(window.location.origin + '/todays-promise')
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'noopener,noreferrer')
+    const url = window.location.origin + '/todays-promise'
+    if (navigator.share) {
+      try {
+        await navigator.share({ url, title: "Today's Promise", text: promise.caption || "Today's Promise from Hosanna Mandir" })
+        return
+      } catch {}
+    }
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer')
   }
 
   const CloseBtn = ({ onClose }: { onClose: () => void }) => (
@@ -469,7 +489,7 @@ export default function HomePage() {
       <PopupManager />
 
       {/* ── Hero ── */}
-      <section className="relative flex min-h-[115vh] items-end overflow-hidden bg-black">
+      <section className="relative flex min-h-[100svh] md:min-h-[115vh] items-end overflow-hidden bg-black">
         {/* Full background — congregation worship image */}
         {/* Desktop Image */}
         <Image
@@ -484,22 +504,17 @@ export default function HomePage() {
 
         {/* Mobile Image */}
         <Image
-          src="/use.jpeg" // Using the main asset safely now
+          src="/use.jpeg"
           alt="Hosanna Mandir Mobile"
           fill
           priority
           quality={100}
           sizes="100vw"
-          className="block md:hidden object-cover object-top"
+          className="block md:hidden object-cover object-center"
         />
 
-        {/* ── NEW DARK TINT OVERLAYS START HERE ── */}
-        {/* Mobile-Specific Dark Overlay Tint (Masks blurriness on mobile screens) */}
-        <div className="absolute inset-0 block md:hidden bg-black/50 z-[1] pointer-events-none" />
-
-        {/* Global Text Readability Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/20 z-[2]" />
-        {/* ── NEW DARK TINT OVERLAYS END HERE ── */}
+        {/* Gradient overlay — lighter on mobile so the image breathes, darker on desktop for text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/5 md:via-black/70 md:to-black/20 z-[2]" />
 
         {/* Location label — top center */}
         <div className="absolute top-28 inset-x-0 z-10 flex justify-center">

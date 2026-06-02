@@ -939,8 +939,8 @@ video {
 .min-h-11{
   min-height: 2.75rem;
 }
-.min-h-\[115vh\]{
-  min-height: 115vh;
+.min-h-\[100svh\]{
+  min-height: 100svh;
 }
 .min-h-\[12rem\]{
   min-height: 12rem;
@@ -2358,10 +2358,6 @@ video {
   --tw-gradient-to: rgb(0 0 0 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), rgb(0 0 0 / 0.6) var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
-.via-black\/70{
-  --tw-gradient-to: rgb(0 0 0 / 0)  var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), rgb(0 0 0 / 0.7) var(--tw-gradient-via-position), var(--tw-gradient-to);
-}
 .via-blue-700{
   --tw-gradient-to: rgb(29 78 216 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #1d4ed8 var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -2492,9 +2488,6 @@ video {
 }
 .to-black\/10{
   --tw-gradient-to: rgb(0 0 0 / 0.1) var(--tw-gradient-to-position);
-}
-.to-black\/20{
-  --tw-gradient-to: rgb(0 0 0 / 0.2) var(--tw-gradient-to-position);
 }
 .to-black\/40{
   --tw-gradient-to: rgb(0 0 0 / 0.4) var(--tw-gradient-to-position);
@@ -2868,9 +2861,6 @@ video {
   font-size: 4.5rem;
   line-height: 1;
 }
-.text-\[0\.82rem\]{
-  font-size: 0.82rem;
-}
 .text-\[0\.85rem\]{
   font-size: 0.85rem;
 }
@@ -2882,6 +2872,9 @@ video {
 }
 .text-\[13px\]{
   font-size: 13px;
+}
+.text-\[1rem\]{
+  font-size: 1rem;
 }
 .text-\[9px\]{
   font-size: 9px;
@@ -2965,9 +2958,6 @@ video {
 }
 .tracking-\[0\.01em\]{
   letter-spacing: 0.01em;
-}
-.tracking-\[0\.02em\]{
-  letter-spacing: 0.02em;
 }
 .tracking-\[0\.08em\]{
   letter-spacing: 0.08em;
@@ -4956,6 +4946,10 @@ body {
     height: auto;
   }
 
+  .md\:min-h-\[115vh\]{
+    min-height: 115vh;
+  }
+
   .md\:w-\[700px\]{
     width: 700px;
   }
@@ -4970,6 +4964,15 @@ body {
 
   .md\:rounded-3xl{
     border-radius: 1.5rem;
+  }
+
+  .md\:via-black\/70{
+    --tw-gradient-to: rgb(0 0 0 / 0)  var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), rgb(0 0 0 / 0.7) var(--tw-gradient-via-position), var(--tw-gradient-to);
+  }
+
+  .md\:to-black\/20{
+    --tw-gradient-to: rgb(0 0 0 / 0.2) var(--tw-gradient-to-position);
   }
 
   .md\:px-4{

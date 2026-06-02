@@ -11,31 +11,64 @@ type MediaItem = {
   createdAt: string
 }
 
-function shareToFacebook(item: MediaItem) {
-  const url = typeof window === 'undefined' ? item.src : new URL(item.src, window.location.origin).toString()
+async function shareImageFile(src: string, title: string, text: string) {
+  try {
+    const response = await fetch(src)
+    const blob = await response.blob()
+    const fileName = src.split('/').pop() || 'hosanna.webp'
+    const file = new File([blob], fileName, { type: blob.type })
+    if (navigator.canShare?.({ files: [file] })) {
+      await navigator.share({ files: [file], title, text })
+      return true
+    }
+  } catch {}
+  return false
+}
+
+async function shareToWhatsApp(item: MediaItem) {
+  const shared = await shareImageFile(
+    item.src,
+    item.title || 'Hosanna Mandir',
+    item.description || 'From Hosanna Mandir'
+  )
+  if (!shared) {
+    const url = new URL(item.src, window.location.origin).toString()
+    const message = [item.title, item.description, url].filter(Boolean).join('\n\n')
+    window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
+  }
+}
+
+async function shareToFacebook(item: MediaItem) {
+  const url = new URL(item.src, window.location.origin).toString()
+  if (navigator.share) {
+    try {
+      await navigator.share({ url, title: item.title || 'Hosanna Mandir', text: item.description || '' })
+      return
+    } catch {}
+  }
   window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'noopener,noreferrer')
 }
 
-function shareToWhatsApp(item: MediaItem) {
-  const url = typeof window === 'undefined' ? item.src : new URL(item.src, window.location.origin).toString()
-  const message = [item.title, item.description, url].filter(Boolean).join('\n\n')
-  window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
+async function downloadImage(item: MediaItem) {
+  try {
+    const res = await fetch(item.src)
+    const blob = await res.blob()
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = item.src.split('/').pop() || 'hosanna-update.webp'
+    a.click()
+    URL.revokeObjectURL(url)
+  } catch {
+    window.open(item.src, '_blank', 'noopener,noreferrer')
+  }
 }
 
-function downloadImage(item: MediaItem) {
-  const link = document.createElement('a')
-  link.href = item.src
-  link.download = item.title || 'hosanna-update'
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
-}
-
-function UpdateCard({ item, big }: { item: MediaItem; big: boolean }) {
+function UpdateCard({ item }: { item: MediaItem; big?: boolean }) {
   const [copied, setCopied] = useState(false)
 
   function copyLink() {
-    const url = typeof window === 'undefined' ? item.src : new URL(item.src, window.location.origin).toString()
+    const url = new URL(item.src, window.location.origin).toString()
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
@@ -44,7 +77,7 @@ function UpdateCard({ item, big }: { item: MediaItem; big: boolean }) {
 
   return (
     <article className="overflow-hidden rounded-[1.5rem] shadow-[0_18px_45px_rgba(33,25,20,0.10)] bg-white">
-      {/* Image — full natural dimensions, no cropping */}
+      {/* Image */}
       <div className="group relative overflow-hidden bg-zinc-950">
         <img
           src={item.src}
@@ -69,7 +102,7 @@ function UpdateCard({ item, big }: { item: MediaItem; big: boolean }) {
       {/* Share row */}
       <div className="px-5 pb-5 pt-3">
         <p className="text-center text-[10px] font-bold tracking-[0.22em] text-zinc-400 uppercase mb-3">
-          SHARE THIS PROMISE
+          SHARE THIS POSTER
         </p>
         <div className="flex flex-wrap justify-center gap-2">
 
@@ -85,7 +118,7 @@ function UpdateCard({ item, big }: { item: MediaItem; big: boolean }) {
             Share
           </button>
 
-          {/* WhatsApp */}
+          {/* WhatsApp — shares actual image file */}
           <button
             type="button"
             onClick={() => shareToWhatsApp(item)}
@@ -97,7 +130,7 @@ function UpdateCard({ item, big }: { item: MediaItem; big: boolean }) {
             Share
           </button>
 
-          {/* Copy Link (Instagram style) */}
+          {/* Copy Link */}
           <button
             type="button"
             onClick={copyLink}

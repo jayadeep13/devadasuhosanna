@@ -53,7 +53,7 @@ const navBg = isHeroState ? 'bg-transparent border-transparent' : 'bg-white'
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3.5 group flex-shrink-0">
-              <div className="relative w-12 h-12 lg:w-[3.25rem] lg:h-[3.25rem] rounded-full overflow-hidden border-2 border-crimson/60 group-hover:border-gold transition-colors duration-500 shadow-crimson">
+              <div className="relative w-14 h-14 lg:w-[3.25rem] lg:h-[3.25rem] rounded-full overflow-hidden border-2 border-crimson/60 group-hover:border-gold transition-colors duration-500 shadow-crimson">
                 <ImageWithFallback
                   src="/images/logo.png"
                   alt="Hosanna Mandir Logo"
@@ -68,12 +68,8 @@ const navBg = isHeroState ? 'bg-transparent border-transparent' : 'bg-white'
                 />
               </div>
               <div className="leading-none">
-                <p className="font-modern text-base font-extrabold leading-none tracking-[0.17em] text-gold lg:text-lg">HOSANNA</p>
-                <p className="font-telugu mt-1 text-[0.82rem] font-semibold leading-tight tracking-[0.01em] text-crimson drop-shadow-[0_0_10px_rgba(204,26,26,0.45)] lg:text-base">దైవ సందేశాలు</p>
-                <div className="hidden">
-                <p className="font-cinzel text-sm lg:text-lg font-bold tracking-[0.02em] text-crimson mt-1 drop-shadow-[0_0_10px_rgba(204,26,26,0.45)]">దైవ సందేశాలు</p>
-             
-                </div>
+                <p className="font-modern text-xl font-extrabold leading-none tracking-[0.17em] text-gold lg:text-lg">HOSANNA</p>
+                <p className="font-telugu mt-1 text-[1rem] font-semibold leading-tight tracking-[0.01em] text-crimson drop-shadow-[0_0_10px_rgba(204,26,26,0.45)] lg:text-base">దైవ సందేశాలు</p>
               </div>
             </Link>
 
