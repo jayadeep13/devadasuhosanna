@@ -272,7 +272,10 @@ export default function AdminMediaPanel() {
       formData.set('file', webpFile)
 
       const response = await fetch('/api/media', { method: 'POST', body: formData })
-      if (!response.ok) throw new Error('Upload failed.')
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}))
+        throw new Error(body.error || `Upload failed (${response.status}).`)
+      }
 
       setTitle('')
       setDescription('')

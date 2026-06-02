@@ -1,5 +1,6 @@
-import { list, put } from '@vercel/blob'
 import { randomUUID } from 'crypto'
+import { mkdir, readFile, writeFile } from 'fs/promises'
+import path from 'path'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
@@ -13,92 +14,132 @@ export type MediaItem = {
   subcategory?: string
   title: string
   description: string
-  src: string        // full Vercel Blob URL
+  src: string
+  fileName?: string   // local-fs only
   createdAt: string
 }
 
-const META_KEY = 'hosanna/metadata/media.json'
+const USE_BLOB   = !!process.env.BLOB_READ_WRITE_TOKEN
+const DATA_FILE  = path.join(process.cwd(), 'data', 'media.json')
+const UPLOAD_ROOT = path.join(process.cwd(), 'public', 'uploads')
 
-async function readMedia(): Promise<MediaItem[]> {
-  try {
-    const { blobs } = await list({ prefix: META_KEY })
-    if (blobs.length === 0) return []
-    const res = await fetch(blobs[0].url, { cache: 'no-store' })
-    return (await res.json()) as MediaItem[]
-  } catch {
-    return []
-  }
+// ── local helpers ─────────────────────────────────────────────────────────────
+async function localRead(): Promise<MediaItem[]> {
+  try { return JSON.parse(await readFile(DATA_FILE, 'utf8')) } catch { return [] }
+}
+async function localWrite(items: MediaItem[]) {
+  await mkdir(path.dirname(DATA_FILE), { recursive: true })
+  await writeFile(DATA_FILE, JSON.stringify(items, null, 2), 'utf8')
 }
 
-async function writeMedia(items: MediaItem[]) {
-  await put(META_KEY, JSON.stringify(items, null, 2), {
-    access: 'public',
-    contentType: 'application/json',
-    addRandomSuffix: false,
+// ── Vercel Blob helpers ───────────────────────────────────────────────────────
+// Per-item: hosanna/media-meta/{id}.json  +  hosanna/media-img/{category}/{id}.webp
+import { del, list, put } from '@vercel/blob'
+
+const META_PFX = 'hosanna/media-meta/'
+
+async function blobReadAll(): Promise<MediaItem[]> {
+  const { blobs } = await list({ prefix: META_PFX })
+  if (blobs.length === 0) return []
+  const items = await Promise.all(
+    blobs.map(async (b) => {
+      try {
+        const r = await fetch(b.url + '?t=' + Date.now())
+        return (await r.json()) as MediaItem
+      } catch { return null }
+    })
+  )
+  return items.filter(Boolean) as MediaItem[]
+}
+
+async function blobWriteItem(item: MediaItem) {
+  await put(`${META_PFX}${item.id}.json`, JSON.stringify(item), {
+    access: 'public', contentType: 'application/json', addRandomSuffix: false,
   })
 }
 
-function isCategory(value: FormDataEntryValue | null): value is MediaCategory {
-  return value === 'gallery' || value === 'updates'
+export async function blobDeleteItem(item: MediaItem) {
+  try { await del(item.src) } catch {}
+  const { blobs } = await list({ prefix: `${META_PFX}${item.id}.json` })
+  if (blobs.length > 0) { try { await del(blobs.map(b => b.url)) } catch {} }
 }
 
+// ── GET ───────────────────────────────────────────────────────────────────────
 export async function GET(request: NextRequest) {
-  const category = request.nextUrl.searchParams.get('category')
-  const subcategory = request.nextUrl.searchParams.get('subcategory')
-  const items = await readMedia()
+  try {
+    const category    = request.nextUrl.searchParams.get('category')
+    const subcategory = request.nextUrl.searchParams.get('subcategory')
+    const all         = USE_BLOB ? await blobReadAll() : await localRead()
 
-  let filtered =
-    category === 'gallery' || category === 'updates'
-      ? items.filter((item) => item.category === category)
-      : items
+    let filtered = category === 'gallery' || category === 'updates'
+      ? all.filter(item => item.category === category)
+      : all
 
-  if (subcategory && subcategory !== 'all') {
-    filtered = filtered.filter((item) => item.subcategory === subcategory)
+    if (subcategory && subcategory !== 'all')
+      filtered = filtered.filter(item => item.subcategory === subcategory)
+
+    return NextResponse.json({
+      items: filtered.sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    })
+  } catch (err) {
+    console.error('[media GET]', err)
+    return NextResponse.json({ items: [] })
   }
+}
 
-  return NextResponse.json({
-    items: filtered.sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
-  })
+// ── POST ──────────────────────────────────────────────────────────────────────
+function isCategory(v: FormDataEntryValue | null): v is MediaCategory {
+  return v === 'gallery' || v === 'updates'
 }
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
     const category = formData.get('category')
-    const file = formData.get('file')
+    const file     = formData.get('file')
 
-    if (!isCategory(category)) {
+    if (!isCategory(category))
       return NextResponse.json({ error: 'Invalid media category.' }, { status: 400 })
-    }
-
-    if (!(file instanceof File)) {
+    if (!(file instanceof File))
       return NextResponse.json({ error: 'Image file is required.' }, { status: 400 })
+
+    const buffer = Buffer.from(await file.arrayBuffer())
+    const id     = randomUUID()
+    let src: string
+    let fileName: string | undefined
+
+    if (USE_BLOB) {
+      const result = await put(`hosanna/media-img/${category}/${id}.webp`, buffer, {
+        access: 'public', contentType: 'image/webp', addRandomSuffix: false,
+      })
+      src = result.url
+    } else {
+      fileName = `${id}.webp`
+      const uploadDir = path.join(UPLOAD_ROOT, category)
+      await mkdir(uploadDir, { recursive: true })
+      await writeFile(path.join(uploadDir, fileName), buffer)
+      src = `/uploads/${category}/${fileName}`
     }
 
-    const arrayBuffer = await file.arrayBuffer()
-    const buffer = Buffer.from(arrayBuffer)
-    const id = randomUUID()
-
-    const { url } = await put(`hosanna/${category}/${id}.webp`, buffer, {
-      access: 'public',
-      contentType: 'image/webp',
-      addRandomSuffix: false,
-    })
-
-    const rawSubcategory = String(formData.get('subcategory') || '').trim()
+    const rawSub = String(formData.get('subcategory') || '').trim()
     const item: MediaItem = {
       id,
       category,
-      subcategory: rawSubcategory || undefined,
-      title: String(formData.get('title') || '').trim() || 'Hosanna Update',
+      subcategory: rawSub || undefined,
+      title:       String(formData.get('title') || '').trim() || 'Hosanna Update',
       description: String(formData.get('description') || '').trim(),
-      src: url,
+      src,
+      fileName,
       createdAt: new Date().toISOString(),
     }
 
-    const items = await readMedia()
-    items.push(item)
-    await writeMedia(items)
+    if (USE_BLOB) {
+      await blobWriteItem(item)
+    } else {
+      const items = await localRead()
+      items.push(item)
+      await localWrite(items)
+    }
 
     return NextResponse.json({ item }, { status: 201 })
   } catch (err) {
