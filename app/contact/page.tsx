@@ -152,7 +152,7 @@ export default function ContactPage() {
       <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden pt-32 pb-20 bg-zinc-950">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/cont.png"
+            src="/cont12.png"
             alt="Contact Background"
             fill
             priority

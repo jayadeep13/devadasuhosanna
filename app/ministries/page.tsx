@@ -137,11 +137,12 @@ export default function MinistriesPage() {
       <section className="relative flex min-h-[55vh] items-center justify-center overflow-hidden pt-32 pb-20 bg-zinc-950">
         <div className="absolute inset-0 z-0">
           <ImageWithFallback
-            src="/mini.jpg"
+            src="/mini1234.jpeg"
             alt="Hosanna ministries"
             className="object-cover object-center"
             fallbackClassName="h-full w-full bg-[#0A0A12]"
             fallback=""
+            sizes="100vw"
             priority
           />
         </div>
