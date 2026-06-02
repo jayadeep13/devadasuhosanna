@@ -1,3 +1,4 @@
+import { list } from '@vercel/blob'
 import { mkdir, readFile, rm, writeFile } from 'fs/promises'
 import path from 'path'
 import { NextResponse } from 'next/server'
@@ -21,16 +22,17 @@ async function localWrite(items: MediaItem[]) {
 export async function DELETE(_request: Request, { params }: { params: { id: string } }) {
   try {
     if (USE_BLOB) {
-      const { list } = await import('@vercel/blob')
       const { blobs } = await list({ prefix: `hosanna/media-meta/${params.id}.json` })
-      if (blobs.length === 0) return NextResponse.json({ error: 'Image not found.' }, { status: 404 })
-      const res  = await fetch(blobs[0].url + '?t=' + Date.now())
+      if (blobs.length === 0)
+        return NextResponse.json({ error: 'Image not found.' }, { status: 404 })
+      const res  = await fetch(`${blobs[0].url}?t=${Date.now()}`)
       const item = (await res.json()) as MediaItem
       await blobDeleteItem(item)
     } else {
       const items = await localRead()
       const item  = items.find(e => e.id === params.id)
-      if (!item) return NextResponse.json({ error: 'Image not found.' }, { status: 404 })
+      if (!item)
+        return NextResponse.json({ error: 'Image not found.' }, { status: 404 })
       if (item.fileName) {
         const fp = path.join(process.cwd(), 'public', 'uploads', item.category, item.fileName)
         try { await rm(fp, { force: true }) } catch {}

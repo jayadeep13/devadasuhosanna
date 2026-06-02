@@ -1,3 +1,4 @@
+import { del, list, put } from '@vercel/blob'
 import { randomUUID } from 'crypto'
 import { mkdir, readFile, writeFile } from 'fs/promises'
 import path from 'path'
@@ -15,13 +16,14 @@ export type MediaItem = {
   title: string
   description: string
   src: string
-  fileName?: string   // local-fs only
+  fileName?: string
   createdAt: string
 }
 
-const USE_BLOB   = !!process.env.BLOB_READ_WRITE_TOKEN
-const DATA_FILE  = path.join(process.cwd(), 'data', 'media.json')
+const USE_BLOB    = !!process.env.BLOB_READ_WRITE_TOKEN
+const DATA_FILE   = path.join(process.cwd(), 'data', 'media.json')
 const UPLOAD_ROOT = path.join(process.cwd(), 'public', 'uploads')
+const META_PFX    = 'hosanna/media-meta/'
 
 // ── local helpers ─────────────────────────────────────────────────────────────
 async function localRead(): Promise<MediaItem[]> {
@@ -32,24 +34,19 @@ async function localWrite(items: MediaItem[]) {
   await writeFile(DATA_FILE, JSON.stringify(items, null, 2), 'utf8')
 }
 
-// ── Vercel Blob helpers ───────────────────────────────────────────────────────
-// Per-item: hosanna/media-meta/{id}.json  +  hosanna/media-img/{category}/{id}.webp
-import { del, list, put } from '@vercel/blob'
-
-const META_PFX = 'hosanna/media-meta/'
-
+// ── Vercel Blob helpers (per-item blobs, no shared JSON to overwrite) ─────────
 async function blobReadAll(): Promise<MediaItem[]> {
   const { blobs } = await list({ prefix: META_PFX })
   if (blobs.length === 0) return []
-  const items = await Promise.all(
+  const results = await Promise.all(
     blobs.map(async (b) => {
       try {
-        const r = await fetch(b.url + '?t=' + Date.now())
+        const r = await fetch(`${b.url}?t=${Date.now()}`)
         return (await r.json()) as MediaItem
       } catch { return null }
     })
   )
-  return items.filter(Boolean) as MediaItem[]
+  return results.filter((x): x is MediaItem => x !== null)
 }
 
 async function blobWriteItem(item: MediaItem) {
@@ -61,7 +58,7 @@ async function blobWriteItem(item: MediaItem) {
 export async function blobDeleteItem(item: MediaItem) {
   try { await del(item.src) } catch {}
   const { blobs } = await list({ prefix: `${META_PFX}${item.id}.json` })
-  if (blobs.length > 0) { try { await del(blobs.map(b => b.url)) } catch {} }
+  for (const b of blobs) { try { await del(b.url) } catch {} }
 }
 
 // ── GET ───────────────────────────────────────────────────────────────────────
@@ -105,7 +102,7 @@ export async function POST(request: NextRequest) {
 
     const buffer = Buffer.from(await file.arrayBuffer())
     const id     = randomUUID()
-    let src: string
+    let src      = ''
     let fileName: string | undefined
 
     if (USE_BLOB) {
@@ -114,7 +111,7 @@ export async function POST(request: NextRequest) {
       })
       src = result.url
     } else {
-      fileName = `${id}.webp`
+      fileName        = `${id}.webp`
       const uploadDir = path.join(UPLOAD_ROOT, category)
       await mkdir(uploadDir, { recursive: true })
       await writeFile(path.join(uploadDir, fileName), buffer)

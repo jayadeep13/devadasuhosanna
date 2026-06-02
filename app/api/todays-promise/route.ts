@@ -1,3 +1,4 @@
+import { del, list, put } from '@vercel/blob'
 import { randomUUID } from 'crypto'
 import { mkdir, readFile, unlink, writeFile } from 'fs/promises'
 import path from 'path'
@@ -11,13 +12,15 @@ export type PromiseItem = {
   src: string
   caption: string
   uploadedAt: string
-  fileName?: string   // local-fs only
+  fileName?: string
 }
 
-const USE_BLOB   = !!process.env.BLOB_READ_WRITE_TOKEN
-const DATA_FILE  = path.join(process.cwd(), 'data', 'promises.json')
-const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'promises')
+const USE_BLOB    = !!process.env.BLOB_READ_WRITE_TOKEN
+const DATA_FILE   = path.join(process.cwd(), 'data', 'promises.json')
+const UPLOAD_DIR  = path.join(process.cwd(), 'public', 'uploads', 'promises')
 const MAX_PROMISES = 7
+const META_PFX    = 'hosanna/promises-meta/'
+const IMG_PFX     = 'hosanna/promises-img/'
 
 // ── local helpers ─────────────────────────────────────────────────────────────
 async function localRead(): Promise<PromiseItem[]> {
@@ -28,26 +31,19 @@ async function localWrite(items: PromiseItem[]) {
   await writeFile(DATA_FILE, JSON.stringify(items, null, 2), 'utf8')
 }
 
-// ── Vercel Blob helpers ───────────────────────────────────────────────────────
-// Per-item approach: each promise has its own metadata blob at
-// hosanna/promises-meta/{id}.json  +  hosanna/promises-img/{id}.webp
-import { del, list, put } from '@vercel/blob'
-
-const META_PFX = 'hosanna/promises-meta/'
-const IMG_PFX  = 'hosanna/promises-img/'
-
+// ── Vercel Blob helpers (per-item blobs, no shared JSON to overwrite) ─────────
 async function blobReadAll(): Promise<PromiseItem[]> {
   const { blobs } = await list({ prefix: META_PFX })
   if (blobs.length === 0) return []
-  const items = await Promise.all(
+  const results = await Promise.all(
     blobs.map(async (b) => {
       try {
-        const r = await fetch(b.url + '?t=' + Date.now())
+        const r = await fetch(`${b.url}?t=${Date.now()}`)
         return (await r.json()) as PromiseItem
       } catch { return null }
     })
   )
-  return items.filter(Boolean) as PromiseItem[]
+  return results.filter((x): x is PromiseItem => x !== null)
 }
 
 async function blobWriteItem(item: PromiseItem) {
@@ -57,11 +53,9 @@ async function blobWriteItem(item: PromiseItem) {
 }
 
 async function blobDeleteItem(item: PromiseItem) {
-  // delete image
   try { await del(item.src) } catch {}
-  // delete metadata blob
   const { blobs } = await list({ prefix: `${META_PFX}${item.id}.json` })
-  if (blobs.length > 0) { try { await del(blobs.map(b => b.url)) } catch {} }
+  for (const b of blobs) { try { await del(b.url) } catch {} }
 }
 
 // ── GET ───────────────────────────────────────────────────────────────────────
@@ -82,20 +76,19 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
-    const file    = formData.get('file')
-    const caption = String(formData.get('caption') || '').trim()
+    const file     = formData.get('file')
+    const caption  = String(formData.get('caption') || '').trim()
 
     if (!(file instanceof File))
       return NextResponse.json({ error: 'Image file is required.' }, { status: 400 })
 
-    const buffer = Buffer.from(await file.arrayBuffer())
-    const id     = randomUUID()
-    let src: string
+    const buffer   = Buffer.from(await file.arrayBuffer())
+    const id       = randomUUID()
+    let src        = ''
     let fileName: string | undefined
 
     if (USE_BLOB) {
-      const imgPath = `${IMG_PFX}${id}.webp`
-      const result  = await put(imgPath, buffer, {
+      const result = await put(`${IMG_PFX}${id}.webp`, buffer, {
         access: 'public', contentType: 'image/webp', addRandomSuffix: false,
       })
       src = result.url
@@ -109,25 +102,19 @@ export async function POST(request: NextRequest) {
     const item: PromiseItem = { id, src, fileName, caption, uploadedAt: new Date().toISOString() }
 
     if (USE_BLOB) {
-      // Save this item's metadata blob
       await blobWriteItem(item)
-
-      // Enforce rolling window: read all, sort, remove oldest beyond limit
       const all    = await blobReadAll()
       const sorted = all.sort((a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime())
-      const excess = sorted.slice(MAX_PROMISES)
-      for (const old of excess) { await blobDeleteItem(old) }
+      for (const old of sorted.slice(MAX_PROMISES)) { await blobDeleteItem(old) }
     } else {
-      const items  = await localRead()
-      const sorted = [item, ...items].sort(
+      const existing = await localRead()
+      const sorted   = [item, ...existing].sort(
         (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
       )
-      const toKeep   = sorted.slice(0, MAX_PROMISES)
-      const toRemove = sorted.slice(MAX_PROMISES)
-      for (const old of toRemove) {
+      for (const old of sorted.slice(MAX_PROMISES)) {
         if (old.fileName) try { await unlink(path.join(UPLOAD_DIR, old.fileName)) } catch {}
       }
-      await localWrite(toKeep)
+      await localWrite(sorted.slice(0, MAX_PROMISES))
     }
 
     return NextResponse.json({ promise: item }, { status: 201 })
