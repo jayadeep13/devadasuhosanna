@@ -1,6 +1,5 @@
+import { del, list, put } from '@vercel/blob'
 import { randomUUID } from 'crypto'
-import { mkdir, readFile, writeFile, unlink } from 'fs/promises'
-import path from 'path'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
@@ -8,28 +7,32 @@ export const dynamic = 'force-dynamic'
 
 export type PromiseItem = {
   id: string
-  src: string
-  fileName: string
+  src: string        // full Vercel Blob URL
   caption: string
   uploadedAt: string
 }
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'promises.json')
-const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'promises')
+const META_KEY = 'hosanna/metadata/promises.json'
+const IMG_PREFIX = 'hosanna/promises/'
 const MAX_PROMISES = 7
 
 async function readPromises(): Promise<PromiseItem[]> {
   try {
-    const raw = await readFile(DATA_FILE, 'utf8')
-    return JSON.parse(raw) as PromiseItem[]
+    const { blobs } = await list({ prefix: META_KEY })
+    if (blobs.length === 0) return []
+    const res = await fetch(blobs[0].url, { cache: 'no-store' })
+    return (await res.json()) as PromiseItem[]
   } catch {
     return []
   }
 }
 
 async function writePromises(items: PromiseItem[]) {
-  await mkdir(path.dirname(DATA_FILE), { recursive: true })
-  await writeFile(DATA_FILE, JSON.stringify(items, null, 2), 'utf8')
+  await put(META_KEY, JSON.stringify(items, null, 2), {
+    access: 'public',
+    contentType: 'application/json',
+    addRandomSuffix: false,
+  })
 }
 
 export async function GET() {
@@ -53,16 +56,16 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
     const id = randomUUID()
-    const fileName = `${id}.webp`
-    const filePath = path.join(UPLOAD_DIR, fileName)
 
-    await mkdir(UPLOAD_DIR, { recursive: true })
-    await writeFile(filePath, buffer)
+    const { url } = await put(`${IMG_PREFIX}${id}.webp`, buffer, {
+      access: 'public',
+      contentType: 'image/webp',
+      addRandomSuffix: false,
+    })
 
     const item: PromiseItem = {
       id,
-      src: `/uploads/promises/${fileName}`,
-      fileName,
+      src: url,
       caption,
       uploadedAt: new Date().toISOString(),
     }
@@ -72,14 +75,11 @@ export async function POST(request: NextRequest) {
       (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
     )
 
-    // Rolling window: remove oldest beyond MAX_PROMISES
     const toKeep = sorted.slice(0, MAX_PROMISES)
     const toRemove = sorted.slice(MAX_PROMISES)
 
     for (const old of toRemove) {
-      try {
-        await unlink(path.join(UPLOAD_DIR, old.fileName))
-      } catch {}
+      try { await del(old.src) } catch {}
     }
 
     await writePromises(toKeep)
@@ -92,17 +92,21 @@ export async function POST(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const { id } = await request.json()
-  if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
-
-  const items = await readPromises()
-  const target = items.find((i) => i.id === id)
-  if (!target) return NextResponse.json({ error: 'Not found' }, { status: 404 })
-
   try {
-    await unlink(path.join(UPLOAD_DIR, target.fileName))
-  } catch {}
+    const { id } = await request.json()
+    if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 })
 
-  await writePromises(items.filter((i) => i.id !== id))
-  return NextResponse.json({ ok: true })
+    const items = await readPromises()
+    const target = items.find((i) => i.id === id)
+    if (!target) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+
+    try { await del(target.src) } catch {}
+
+    await writePromises(items.filter((i) => i.id !== id))
+    return NextResponse.json({ ok: true })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[todays-promise DELETE]', err)
+    return NextResponse.json({ error: message }, { status: 500 })
+  }
 }

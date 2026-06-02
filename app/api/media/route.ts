@@ -1,6 +1,5 @@
+import { list, put } from '@vercel/blob'
 import { randomUUID } from 'crypto'
-import { mkdir, readFile, writeFile } from 'fs/promises'
-import path from 'path'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
@@ -14,26 +13,29 @@ export type MediaItem = {
   subcategory?: string
   title: string
   description: string
-  src: string
-  fileName: string
+  src: string        // full Vercel Blob URL
   createdAt: string
 }
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'media.json')
-const UPLOAD_ROOT = path.join(process.cwd(), 'public', 'uploads')
+const META_KEY = 'hosanna/metadata/media.json'
 
 async function readMedia(): Promise<MediaItem[]> {
   try {
-    const raw = await readFile(DATA_FILE, 'utf8')
-    return JSON.parse(raw) as MediaItem[]
+    const { blobs } = await list({ prefix: META_KEY })
+    if (blobs.length === 0) return []
+    const res = await fetch(blobs[0].url, { cache: 'no-store' })
+    return (await res.json()) as MediaItem[]
   } catch {
     return []
   }
 }
 
 async function writeMedia(items: MediaItem[]) {
-  await mkdir(path.dirname(DATA_FILE), { recursive: true })
-  await writeFile(DATA_FILE, JSON.stringify(items, null, 2), 'utf8')
+  await put(META_KEY, JSON.stringify(items, null, 2), {
+    access: 'public',
+    contentType: 'application/json',
+    addRandomSuffix: false,
+  })
 }
 
 function isCategory(value: FormDataEntryValue | null): value is MediaCategory {
@@ -44,55 +46,64 @@ export async function GET(request: NextRequest) {
   const category = request.nextUrl.searchParams.get('category')
   const subcategory = request.nextUrl.searchParams.get('subcategory')
   const items = await readMedia()
-  let filtered = category === 'gallery' || category === 'updates'
-    ? items.filter((item) => item.category === category)
-    : items
+
+  let filtered =
+    category === 'gallery' || category === 'updates'
+      ? items.filter((item) => item.category === category)
+      : items
 
   if (subcategory && subcategory !== 'all') {
     filtered = filtered.filter((item) => item.subcategory === subcategory)
   }
 
-  return NextResponse.json({ items: filtered.sort((a, b) => b.createdAt.localeCompare(a.createdAt)) })
+  return NextResponse.json({
+    items: filtered.sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+  })
 }
 
 export async function POST(request: NextRequest) {
-  const formData = await request.formData()
-  const category = formData.get('category')
-  const file = formData.get('file')
+  try {
+    const formData = await request.formData()
+    const category = formData.get('category')
+    const file = formData.get('file')
 
-  if (!isCategory(category)) {
-    return NextResponse.json({ error: 'Invalid media category.' }, { status: 400 })
+    if (!isCategory(category)) {
+      return NextResponse.json({ error: 'Invalid media category.' }, { status: 400 })
+    }
+
+    if (!(file instanceof File)) {
+      return NextResponse.json({ error: 'Image file is required.' }, { status: 400 })
+    }
+
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+    const id = randomUUID()
+
+    const { url } = await put(`hosanna/${category}/${id}.webp`, buffer, {
+      access: 'public',
+      contentType: 'image/webp',
+      addRandomSuffix: false,
+    })
+
+    const rawSubcategory = String(formData.get('subcategory') || '').trim()
+    const item: MediaItem = {
+      id,
+      category,
+      subcategory: rawSubcategory || undefined,
+      title: String(formData.get('title') || '').trim() || 'Hosanna Update',
+      description: String(formData.get('description') || '').trim(),
+      src: url,
+      createdAt: new Date().toISOString(),
+    }
+
+    const items = await readMedia()
+    items.push(item)
+    await writeMedia(items)
+
+    return NextResponse.json({ item }, { status: 201 })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    console.error('[media POST]', err)
+    return NextResponse.json({ error: message }, { status: 500 })
   }
-
-  if (!(file instanceof File)) {
-    return NextResponse.json({ error: 'Image file is required.' }, { status: 400 })
-  }
-
-  const arrayBuffer = await file.arrayBuffer()
-  const buffer = Buffer.from(arrayBuffer)
-  const id = randomUUID()
-  const fileName = `${id}.webp`
-  const uploadDir = path.join(UPLOAD_ROOT, category)
-  const filePath = path.join(uploadDir, fileName)
-
-  await mkdir(uploadDir, { recursive: true })
-  await writeFile(filePath, buffer)
-
-  const rawSubcategory = String(formData.get('subcategory') || '').trim()
-  const item: MediaItem = {
-    id,
-    category,
-    subcategory: rawSubcategory || undefined,
-    title: String(formData.get('title') || '').trim() || 'Hosanna Update',
-    description: String(formData.get('description') || '').trim(),
-    src: `/uploads/${category}/${fileName}`,
-    fileName,
-    createdAt: new Date().toISOString(),
-  }
-
-  const items = await readMedia()
-  items.push(item)
-  await writeMedia(items)
-
-  return NextResponse.json({ item }, { status: 201 })
 }
