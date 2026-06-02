@@ -1,15 +1,15 @@
-import { list } from '@vercel/blob'
+import { del, list } from '@vercel/blob'
 import { mkdir, readFile, rm, writeFile } from 'fs/promises'
 import path from 'path'
 import { NextResponse } from 'next/server'
 import type { MediaItem } from '../route'
-import { blobDeleteItem } from '../route'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 const USE_BLOB  = !!process.env.BLOB_READ_WRITE_TOKEN
 const DATA_FILE = path.join(process.cwd(), 'data', 'media.json')
+const META_PFX  = 'hosanna/media-meta/'
 
 async function localRead(): Promise<MediaItem[]> {
   try { return JSON.parse(await readFile(DATA_FILE, 'utf8')) } catch { return [] }
@@ -22,12 +22,16 @@ async function localWrite(items: MediaItem[]) {
 export async function DELETE(_request: Request, { params }: { params: { id: string } }) {
   try {
     if (USE_BLOB) {
-      const { blobs } = await list({ prefix: `hosanna/media-meta/${params.id}.json` })
+      // Find and fetch the item's own metadata blob
+      const { blobs } = await list({ prefix: `${META_PFX}${params.id}.json` })
       if (blobs.length === 0)
         return NextResponse.json({ error: 'Image not found.' }, { status: 404 })
       const res  = await fetch(`${blobs[0].url}?t=${Date.now()}`)
       const item = (await res.json()) as MediaItem
-      await blobDeleteItem(item)
+      // Delete image blob
+      try { await del(item.src) } catch {}
+      // Delete metadata blob
+      for (const b of blobs) { try { await del(b.url) } catch {} }
     } else {
       const items = await localRead()
       const item  = items.find(e => e.id === params.id)

@@ -1,4 +1,4 @@
-import { del, list, put } from '@vercel/blob'
+import { list, put } from '@vercel/blob'
 import { randomUUID } from 'crypto'
 import { mkdir, readFile, writeFile } from 'fs/promises'
 import path from 'path'
@@ -55,11 +55,6 @@ async function blobWriteItem(item: MediaItem) {
   })
 }
 
-export async function blobDeleteItem(item: MediaItem) {
-  try { await del(item.src) } catch {}
-  const { blobs } = await list({ prefix: `${META_PFX}${item.id}.json` })
-  for (const b of blobs) { try { await del(b.url) } catch {} }
-}
 
 // ── GET ───────────────────────────────────────────────────────────────────────
 export async function GET(request: NextRequest) {
