@@ -5,13 +5,14 @@ import Image from 'next/image'
 import ScrollReveal from '@/components/ScrollReveal'
 
 const SUBCATEGORIES = [
-
+  { value: 'all', label: 'All Photos' },
   { value: 'children', label: 'Children' },
   { value: 'gospel-meetings', label: 'Gospel Meetings' },
   { value: 'pastors-meeting', label: 'Pastors Meeting' },
   { value: 'church-construction', label: 'Church Construction' },
+  { value: 'nuzvid-foundation-stone', label: 'Nuzvid మందిర పునాది రాయి కార్యక్రమం' },
   { value: 'others', label: 'Others' },
-    { value: 'all', label: 'All Photos' },
+  
 ]
 
 type MediaItem = {
@@ -116,7 +117,7 @@ function Lightbox({ item, onClose }: { item: MediaItem; onClose: () => void }) {
 }
 
 export default function GalleryPage() {
-  const [active, setActive] = useState('children')
+  const [active, setActive] = useState('all')
   const [items, setItems] = useState<MediaItem[]>([])
   const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState<MediaItem | null>(null)

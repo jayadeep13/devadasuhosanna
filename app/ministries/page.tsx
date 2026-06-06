@@ -10,7 +10,7 @@ import ImageWithFallback from '@/components/ImageWithFallback'
 const ministries = [
   {
     title: 'Bible Classes',
-    image: '/biblestudy.jpeg', // Dedicated asset node
+    image: '/bib.jpeg', // Dedicated asset node
     gradient: 'from-blue-600 via-blue-700 to-indigo-900',
     accentColor: 'text-blue-600',
     intro: "God's Word is the foundation of spiritual growth. Our Bible classes help believers understand Scripture clearly, apply it daily, and grow into mature disciples of Jesus Christ.",

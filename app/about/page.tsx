@@ -242,6 +242,67 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* 📖 NEW SECTION: NUZVID FOUNDATION STONE CEREMONY */}
+      <section className="py-16 bg-[#f4f8ff]/60 border-t border-zinc-100">
+        <div className="max-w-6xl mx-auto px-6 sm:px-12">
+          <ScrollReveal>
+            <div className="text-left space-y-2 mb-6">
+              <span className="text-xs font-bold tracking-widest text-blue-600 uppercase block">
+                02.1 . నూజివీడు మందిర పునాది రాయి
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black tracking-tight text-zinc-950 leading-tight">
+                Nuzvid <span className="text-blue-600">మందిర పునాది రాయి కార్యక్రమం</span>
+              </h2>
+              <p className="text-sm sm:text-base font-semibold text-zinc-500">Foundation Stone Laying Ceremony</p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-3xl border border-blue-600/10 bg-white p-5 sm:p-8 shadow-sm">
+              <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm sm:text-base font-normal leading-relaxed text-left">
+                <div className="text-zinc-800 space-y-3 border-l-2 border-blue-500/30 pl-4">
+                  <p>
+                    దేవుని కృపతో, నూజివీడులో నూతన ఆరాధన మందిరానికి పునాది రాయి ఘనంగా వేయబడింది. పాస్టర్లు, పెద్దలు మరియు వందలాది మంది విశ్వాసులు ఈ చారిత్రాత్మక ఘట్టంలో పాల్గొని, ప్రార్థనలతో, స్తుతి ఆరాధనలతో దేవునికి మహిమ చెల్లించారు.
+                  </p>
+                  <p>
+                    ఈ నూతన మందిరం నూజివీడు మరియు పరిసర ప్రాంతాల ప్రజలకు ఆత్మీయ ఆశ్రయంగా, స్వస్థత, విడుదల కేంద్రంగా మారి, వేలాది హృదయాలకు దీవెనగా నిలవాలని విశ్వాసులు హృదయపూర్వకంగా ప్రార్థించారు.
+                  </p>
+                </div>
+                <div className="text-zinc-500 space-y-3">
+                  <p>
+                    By God&apos;s amazing grace, the foundation stone for the new Hosanna worship sanctuary in Nuzvid was laid in a glorious ceremony. Pastors, church elders, and hundreds of believers gathered for this historic moment — filled with prayer, worship, and praise to God.
+                  </p>
+                  <p>
+                    The congregation prayed earnestly that this new sanctuary would rise as a place of healing, deliverance, and spiritual refuge — a lasting blessing for the people of Nuzvid and the surrounding region for generations to come.
+                  </p>
+                </div>
+              </div>
+
+              <div className="lg:col-span-5 grid grid-cols-2 gap-3">
+                {[1, 14, 5].map((n, i) => (
+                  <div key={n} className={`relative overflow-hidden rounded-2xl bg-zinc-50 shadow-sm ${i === 0 ? 'col-span-2 aspect-[16/9]' : 'aspect-square'}`}>
+                    <Image
+                      src={`/nuzvid-foundation-stone/nuzvid-foundation-${n}.jpeg`}
+                      alt="Nuzvid Mandir Foundation Stone Ceremony"
+                      fill
+                      className="object-cover object-center"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-6 text-center">
+              <Link
+                href="/gallery"
+                className="inline-flex items-center gap-2 font-sans text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700 transition-all duration-200 hover:gap-3"
+              >
+                View Full Gallery — Nuzvid మందిర పునాది రాయి కార్యక్రమం
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* 📖 SECTION 3: THE ANNUAL REVIVAL FLAME */}
       <section className="py-16 bg-zinc-50/40 border-t border-b border-zinc-100">
         <div className="max-w-6xl mx-auto px-6 sm:px-12">

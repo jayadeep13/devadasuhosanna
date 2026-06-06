@@ -19,6 +19,7 @@ type ChurchCard = {
 
 const HANUMAN_MAPS_URL = 'https://maps.google.com/?q=Hosanna+Mandir+Hanuman+Junction'
 const NUZVID_MAPS_URL = 'https://maps.google.com/?q=Hosanna+Mandir+Nuzvid'
+const PRAYER_GARDEN_MAPS_URL = 'https://www.google.com/maps/place/Hosanna+Prayer+Garden/@16.785211,80.8717336,17z/data=!3m1!4b1!4m6!3m5!1s0x3a3675007996bdbb:0xb876610c381ff23b!8m2!3d16.785211!4d80.8743139!16s%2Fg%2F11x7phmy0f'
 
 const infoCards: ChurchCard[] = [
   {
@@ -408,6 +409,29 @@ export default function ContactPage() {
                     <p className="text-[11px] text-zinc-400 font-medium mt-0.5">Andhra Pradesh, India</p>
                   </div>
                   <a href={NUZVID_MAPS_URL} target="_blank" rel="noreferrer" className="inline-flex h-9 px-4 items-center rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-800 text-xs font-bold uppercase tracking-wider transition-colors hover:bg-zinc-900 hover:text-white hover:border-zinc-900 shrink-0">
+                    MAPS
+                  </a>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* Campus Map 3 — Hosanna Prayer Garden */}
+            <ScrollReveal delay={200} className="flex-1 flex flex-col">
+              <div className="rounded-3xl border border-zinc-200 bg-white overflow-hidden shadow-sm flex flex-col justify-between h-full flex-1">
+                <div className="relative w-full flex-1 min-h-[12rem] bg-zinc-100">
+                  <iframe
+                    src="https://maps.google.com/maps?q=Hosanna+Prayer+Garden,16.785211,80.8743139&z=16&output=embed"
+                    title="Hosanna Prayer Garden Map Terminal"
+                    className="absolute inset-0 h-full w-full"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-4 flex items-center justify-between gap-4 bg-white border-t border-zinc-100 shrink-0">
+                  <div>
+                    <h4 className="font-bold text-zinc-900 text-sm">Hosanna Prayer Garden</h4>
+                    <p className="text-[11px] text-zinc-400 font-medium mt-0.5">Andhra Pradesh, India</p>
+                  </div>
+                  <a href={PRAYER_GARDEN_MAPS_URL} target="_blank" rel="noreferrer" className="inline-flex h-9 px-4 items-center rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-800 text-xs font-bold uppercase tracking-wider transition-colors hover:bg-zinc-900 hover:text-white hover:border-zinc-900 shrink-0">
                     MAPS
                   </a>
                 </div>

@@ -221,7 +221,7 @@ function PromisePanel() {
 
 // ─── Main admin panel ─────────────────────────────────────────────────────────
 export default function AdminMediaPanel() {
-  const [mainTab, setMainTab] = useState<MainTab>('updates')
+  const [mainTab, setMainTab] = useState<MainTab>('promise')
   const [category, setCategory] = useState<Category>('updates')
   const [gallerySubcategory, setGallerySubcategory] = useState('children')
   const [viewSubcategory, setViewSubcategory] = useState('all')

@@ -1,4 +1,16 @@
 
 > hosanna-church@1.0.0 dev
-> next dev -p 3001
+> next dev
 
+ ⚠ Port 3000 is in use, trying 3001 instead.
+ ⚠ Port 3001 is in use, trying 3002 instead.
+  ▲ Next.js 14.2.3
+  - Local:        http://localhost:3002
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 3.6s
+ ○ Compiling / ...
+ ✓ Compiled / in 2.2s (536 modules)
+ GET / 200 in 2665ms
+[?25h

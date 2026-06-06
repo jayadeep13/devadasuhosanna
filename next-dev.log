@@ -1,0 +1,17 @@
+
+> hosanna-church@1.0.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+  ▲ Next.js 14.2.3
+  - Local:        http://localhost:3001
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 3.7s
+ ○ Compiling /gallery ...
+ ✓ Compiled /gallery in 1189ms (536 modules)
+ GET /gallery 200 in 1499ms
+ ✓ Compiled /admin in 443ms (544 modules)
+ GET /admin 200 in 591ms
+[?25h

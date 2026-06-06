@@ -108,26 +108,26 @@ function UdayakalaVideoSection() {
   }, [])
 
   return (
-    <section className="relative overflow-hidden bg-[#07050e] pt-24 pb-0">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(225,29,72,0.15),transparent_55%)]" />
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#fff8ed] via-white to-white pt-24 pb-0">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(250,204,21,0.12),transparent_55%)]" />
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-zinc-200 to-transparent" />
+      <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-zinc-200 to-transparent" />
 
       <div className="relative mx-auto max-w-4xl px-5 sm:px-8">
         <ScrollReveal>
           <div className="mb-10 text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 font-modern text-xs font-extrabold uppercase tracking-[0.28em] text-[#facc15]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-amber-500/25 bg-amber-500/10 px-5 py-2 font-modern text-xs font-extrabold uppercase tracking-[0.28em] text-amber-700">
               Daily Devotion
             </span>
-            <h2 className="mt-4 font-display text-3xl font-black text-white sm:text-4xl">ఉదయకాల సందేశాలు</h2>
-            <p className="mt-2 font-modern text-sm text-white/40 tracking-wide">Udayakala Sandhesam · Morning Messages</p>
+            <h2 className="mt-4 font-display text-3xl font-black text-[#211914] sm:text-4xl">ఉదయకాల సందేశాలు</h2>
+            <p className="mt-2 font-modern text-sm text-zinc-500 tracking-wide">Udayakala Sandhesam · Morning Messages</p>
           </div>
 
-          <div className="overflow-hidden rounded-3xl border border-white/10 shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
-            <div className="relative aspect-video w-full bg-zinc-950 flex items-center justify-center">
+          <div className="overflow-hidden rounded-3xl border border-zinc-200 shadow-[0_32px_80px_rgba(0,0,0,0.12)]">
+            <div className="relative aspect-video w-full bg-zinc-100 flex items-center justify-center">
               {loading ? (
-                <div className="flex flex-col items-center gap-3 text-white/30">
-                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/10 border-t-[#facc15]" />
+                <div className="flex flex-col items-center gap-3 text-zinc-400">
+                  <div className="h-8 w-8 animate-spin rounded-full border-2 border-zinc-200 border-t-amber-500" />
                   <p className="font-modern text-xs uppercase tracking-widest">Loading message…</p>
                 </div>
               ) : videoId ? (
@@ -139,7 +139,7 @@ function UdayakalaVideoSection() {
                   className="absolute inset-0 h-full w-full border-0"
                 />
               ) : (
-                <div className="flex flex-col items-center gap-3 text-white/30">
+                <div className="flex flex-col items-center gap-3 text-zinc-400">
                   <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" /></svg>
                   <p className="font-modern text-xs uppercase tracking-widest">Video coming soon</p>
                 </div>
@@ -150,7 +150,7 @@ function UdayakalaVideoSection() {
           <div className="mt-8 text-center">
             <Link
               href="/udayakala-daiva-sandesham"
-              className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/8 px-8 py-3.5 font-modern text-sm font-extrabold uppercase tracking-[0.16em] text-white backdrop-blur-sm transition hover:border-[#facc15]/50 hover:bg-[#facc15]/10 hover:text-[#facc15]"
+              className="inline-flex items-center gap-2.5 rounded-full border border-zinc-200 bg-white px-8 py-3.5 font-modern text-sm font-extrabold uppercase tracking-[0.16em] text-zinc-800 shadow-sm transition hover:border-amber-400/50 hover:bg-amber-50 hover:text-amber-700"
             >
               <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
               Watch More ఉదయకాల సందేశాలు Videos
@@ -160,7 +160,7 @@ function UdayakalaVideoSection() {
       </div>
 
       {/* Powered by P&J Technologies — seamless scrolling marquee */}
-      <div className="mt-10 w-full border-t border-white/8 py-1 overflow-hidden flex select-none">
+      <div className="mt-10 w-full border-t border-zinc-200 bg-[#07050e] py-1 overflow-hidden flex select-none">
         <div className="marquee-track flex whitespace-nowrap shrink-0 items-center">
           {[...Array(2)].map((setIdx) =>
             [...Array(6)].map((_, i) => (
@@ -830,6 +830,142 @@ export default function HomePage() {
                 </div>
               </ScrollReveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Nuzvid Foundation Stone Ceremony ── */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#fff8ed] via-white to-white py-20">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <ScrollReveal>
+            <div className="mx-auto mb-12 max-w-3xl text-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-blue-600/20 bg-blue-600/5 px-5 py-1.5 font-modern text-[10px] font-bold uppercase tracking-[0.3em] text-blue-700">
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-600" /> Milestone · నూజివీడు
+              </span>
+              <h2 className="mt-4 font-display text-3xl font-black leading-tight text-[#211914] sm:text-5xl">
+                Nuzvid <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-[#e11d48]">మందిర పునాది రాయి కార్యక్రమం</span>
+              </h2>
+              <div className="mx-auto my-5 h-1 w-28 rounded-full bg-gradient-to-r from-blue-600 via-[#facc15] to-[#e11d48]" />
+              <p className="font-modern text-base leading-8 text-[#67554b]">
+                A historic day of prayer and celebration as the foundation stone for the new Hosanna worship sanctuary in Nuzvid was laid.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+            {/* Matter */}
+            <ScrollReveal>
+              <div className="space-y-4 text-left text-sm font-normal leading-relaxed sm:text-base">
+                <div className="space-y-3 border-l-2 border-blue-600/30 pl-4 text-zinc-800">
+                  <p>
+                    దేవుని కృపతో, నూజివీడులో నూతన ఆరాధన మందిరానికి పునాది రాయి ఘనంగా వేయబడింది. పాస్టర్లు, పెద్దలు మరియు వందలాది మంది విశ్వాసులు ఈ చారిత్రాత్మక ఘట్టంలో పాల్గొని, ప్రార్థనలతో, స్తుతి ఆరాధనలతో దేవునికి మహిమ చెల్లించారు.
+                  </p>
+                  <p>
+                    ఈ నూతన మందిరం నూజివీడు మరియు పరిసర ప్రాంతాల ప్రజలకు ఆత్మీయ ఆశ్రయంగా, స్వస్థత, విడుదల కేంద్రంగా మారి, వేలాది హృదయాలకు దీవెనగా నిలవాలని విశ్వాసులు హృదయపూర్వకంగా ప్రార్థించారు.
+                  </p>
+                </div>
+                <div className="space-y-3 text-zinc-500">
+                  <p>
+                    By God&apos;s amazing grace, the foundation stone for the new Hosanna worship sanctuary in Nuzvid was laid in a glorious ceremony. Pastors, church elders, and hundreds of believers gathered for this historic moment — filled with prayer, worship, and praise to God.
+                  </p>
+                  <p>
+                    The congregation prayed earnestly that this new sanctuary would rise as a place of healing, deliverance, and spiritual refuge — a lasting blessing for the people of Nuzvid and the surrounding region for generations to come.
+                  </p>
+                </div>
+                <Link
+                  href="/gallery"
+                  className="inline-flex items-center gap-2 pt-2 font-modern text-xs font-extrabold uppercase tracking-[0.22em] text-blue-700 transition-all duration-200 hover:gap-3"
+                >
+                  View Photos in Gallery
+                  <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                </Link>
+              </div>
+            </ScrollReveal>
+
+            {/* Image grid */}
+            <ScrollReveal delay={120}>
+              <div className="grid grid-cols-2 gap-3">
+                {[19, 2, 3].map((n, i) => (
+                  <div key={`${n}-${i}`} className={`relative overflow-hidden rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.1)] ${i === 0 ? 'col-span-2 aspect-[16/9]' : 'aspect-square'}`}>
+                    <img
+                      src={`/nuzvid-foundation-stone/nuzvid-foundation-${n}.jpeg`}
+                      alt="Nuzvid Mandir Foundation Stone Ceremony"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Hosanna Suvaartha Swasthatha Mahasabhalu ── */}
+      <section className="relative overflow-hidden bg-[#0c0f1a] py-20">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(225,29,72,0.18),transparent_55%),radial-gradient(ellipse_at_80%_100%,rgba(250,204,21,0.1),transparent_50%)]" />
+        <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+        <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
+          <ScrollReveal>
+            <div className="mx-auto mb-12 max-w-3xl text-center">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#facc15]/25 bg-[#facc15]/10 px-5 py-1.5 font-modern text-[10px] font-bold uppercase tracking-[0.3em] text-[#facc15]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#facc15]" /> Gospel Healing Convention
+              </span>
+              <h2 className="mt-4 font-display text-3xl font-black leading-tight text-white sm:text-5xl">
+                Hosanna <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e11d48] to-[#facc15]">సువార్త స్వస్థత మహాసభలు</span>
+              </h2>
+              <div className="mx-auto my-5 h-1 w-28 rounded-full bg-gradient-to-r from-[#e11d48] via-[#facc15] to-[#e11d48]" />
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-5 py-2 font-modern text-xs font-extrabold uppercase tracking-[0.2em] text-white backdrop-blur-sm">
+                <svg className="h-3.5 w-3.5 text-[#facc15]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                మే 5, 6, 7 · 2026
+              </span>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+            {/* Image grid */}
+            <ScrollReveal>
+              <div className="grid grid-cols-2 gap-3">
+                {[3, 1, 2].map((n, i) => (
+                  <div key={n} className={`relative overflow-hidden rounded-2xl border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.4)] ${i === 0 ? 'col-span-2 aspect-[16/9]' : 'aspect-square'}`}>
+                    <img
+                      src={`/suvaartha-mahasabhalu/suvaartha-${n}.jpeg`}
+                      alt="Hosanna Suvaartha Swasthatha Mahasabhalu"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+
+            {/* Matter */}
+            <ScrollReveal delay={120}>
+              <div className="space-y-4 text-left text-sm font-normal leading-relaxed sm:text-base">
+                <div className="space-y-3 border-l-2 border-[#facc15]/40 pl-4 text-white/80">
+                  <p>
+                    దేవుని మహిమ కొరకు 2026 మే 5, 6, 7 తేదీలలో &ldquo;హోసన్నా సువార్త స్వస్థత మహాసభలు&rdquo; ఘనంగా జరిగాయి. వేలాది మంది విశ్వాసులు, రోగులు, భారంగల హృదయాలు ఈ ప్రత్యేక సువార్త సభలలో పాల్గొని, దేవుని వాక్య ప్రకటన ద్వారా స్వస్థతలు, అద్భుతాలు, రక్షణలు పొందారు.
+                  </p>
+                  <p>
+                    ప్రతి రాత్రి జరిగిన ఈ మహాసభలలో ప్రార్థన, స్తుతి ఆరాధన, దైవవాక్య ప్రసంగాల ద్వారా లెక్కలేనన్ని జీవితాలు మార్పుచెందాయి. దేవుని కృప, మహిమ ఈ సభలన్నింటా స్పష్టంగా కనిపించింది.
+                  </p>
+                </div>
+                <div className="space-y-3 text-white/45">
+                  <p>
+                    To the glory of God, the &ldquo;Hosanna Suvaartha Swasthatha Mahasabhalu&rdquo; (Gospel Healing Convention) was held with great power on May 5, 6 &amp; 7, 2026. Thousands of believers, the sick, and burdened hearts gathered for these special gospel meetings — receiving healing, miracles, and salvation through the preaching of God&apos;s Word.
+                  </p>
+                  <p>
+                    Each night was filled with prayer, praise and worship, and anointed preaching, as countless lives were transformed. God&apos;s grace and glory were powerfully evident throughout these meetings.
+                  </p>
+                </div>
+                <Link
+                  href="/gallery"
+                  className="inline-flex items-center gap-2 pt-2 font-modern text-xs font-extrabold uppercase tracking-[0.22em] text-[#facc15] transition-all duration-200 hover:gap-3"
+                >
+                  View Photos in Gallery
+                  <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                </Link>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>

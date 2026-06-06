@@ -23,6 +23,20 @@
 
 html { scroll-behavior: smooth; }
 
+/* Scale the whole site up on large desktops, TVs, and projectors —
+   Tailwind's rem-based sizes (text, spacing, max-widths) scale with the root font-size,
+   so raising it here makes everything proportionally larger instead of looking small
+   in a sea of whitespace on big screens. */
+@media (min-width: 1600px) {
+  html { font-size: 18px; }
+}
+@media (min-width: 1920px) {
+  html { font-size: 20px; }
+}
+@media (min-width: 2560px) {
+  html { font-size: 23px; }
+}
+
 body {
   margin: 0;
   background: var(--void);
