@@ -5,6 +5,8 @@ import Footer from '@/components/Footer'
 import PageTransition from '@/components/PageTransition'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.devadasuhosanna.com'),
+
   title: {
     default:
       'Hosanna Ministries | Hosanna Mandir Hanuman Junction | Pastor Deva Dasu',
@@ -52,9 +54,17 @@ export const metadata: Metadata = {
   publisher: 'Hosanna Ministries',
 
   icons: {
-    icon: '/logo1.svg',
-    shortcut: '/logo1.svg',
-    apple: '/logo1.svg',
+    icon: [
+      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/icon.png',
+    apple: '/apple-icon.png',
+  },
+
+  alternates: {
+    canonical: 'https://www.devadasuhosanna.com',
   },
 
   openGraph: {
@@ -65,7 +75,8 @@ export const metadata: Metadata = {
     siteName: 'Hosanna Ministries',
     locale: 'en_US',
     type: 'website',
-    url: 'https://your-domain.com', // Replace with your actual domain
+    url: 'https://www.devadasuhosanna.com',
+    images: ['/logo1.png'],
   },
 
   twitter: {
@@ -90,9 +101,35 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Church',
+    name: 'Hosanna Ministries | Hosanna Mandir',
+    alternateName: 'Hosanna Mandir Hanuman Junction',
+    url: 'https://www.devadasuhosanna.com',
+    logo: 'https://www.devadasuhosanna.com/logo1.png',
+    image: 'https://www.devadasuhosanna.com/logo1.png',
+    description:
+      'Hosanna Ministries (Hosanna Mandir) Hanuman Junction. Join Pastor Deva Dasu for worship services, healing prayer, Bible teaching, gospel ministry, online messages, Christian fellowship, and spiritual growth.',
+    founder: {
+      '@type': 'Person',
+      name: 'Pastor Deva Dasu',
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Hanuman Junction',
+      addressRegion: 'Andhra Pradesh',
+      addressCountry: 'IN',
+    },
+  }
+
   return (
     <html lang="en" className="scroll-smooth">
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <PageTransition />
         <Navbar />
         <main>{children}</main>
