@@ -18,15 +18,9 @@ const ministries = [
 ]
 
 const testimonials = [
+
   {
-    name: 'Pulapaka Suvarchala & Nella Satyanarayana Garu Family',
-    location: 'Nuzvid',
-    role: 'Thankful Family • Witnesses of Gods Faithfulness',
-    image: '/satfa.png',
-    quote: 'God has been faithful to our family throughout our journey. By His grace, Satyanarayana Garu serves as an LIC Officer and Suvarchala Garu serves as a School Teacher. The Lord has blessed our children with successful careers and a bright future. Our son Tarun and daughter-in-law Mani serve as Section Officers in EPFO, Delhi. Our daughter is pursuing her PhD at EFLU, Hyderabad and serving as an Assistant Professor. We thank God for His guidance, favor, and countless blessings upon our family. All glory belongs to Him.',
-  },
-  {
-    name: 'Lakshmi Devi',
+    name: 'Vara Lakshmi',
     location: 'Nuzvid',
     role: "Women's Ministry Member",
     image: '/testimonials/t2.jpg',
